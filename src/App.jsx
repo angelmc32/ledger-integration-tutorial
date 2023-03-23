@@ -11,8 +11,6 @@ function App() {
         <p>Click on the bellow button to connect your Ledger Wallet</p>
         <button
           className="mt-6 mb-2 rounded bg-blue-700 py-2 px-4 font-bold text-white hover:bg-blue-600"
-          data-bs-toggle="modal"
-          data-bs-target="#WalletModal"
           onClick={() => setShowModal(!showModal)}
         >
           Connect your Wallet
@@ -145,62 +143,6 @@ function App() {
                   className="rounded-md border-2 border-gray-400 p-6 hover:border-0 hover:outline hover:outline-4 hover:outline-orange-500"
                 >
                   <img src={ledgerLogo} className="card-img-top" alt="Ledger" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showModal === "ok" && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
-          <div className="relative my-6 mx-auto w-auto max-w-3xl">
-            <div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
-              <div className="flex items-start justify-between rounded-t border-b border-solid border-gray-300 p-5 ">
-                <h3 className="font=semibold text-3xl">General Info</h3>
-                <button
-                  className="float-right border-0 bg-transparent text-black"
-                  onClick={() => setShowModal(false)}
-                >
-                  <span className="opacity-7 block h-6 w-6 rounded-full bg-gray-400 py-0 text-xl text-black">
-                    x
-                  </span>
-                </button>
-              </div>
-              <div className="relative flex-auto p-6">
-                <form className="w-full rounded bg-gray-200 px-8 pt-6 pb-8 shadow-md">
-                  <label className="mb-1 block text-sm font-bold text-black">
-                    First Name
-                  </label>
-                  <input className="w-full appearance-none rounded border py-2 px-1 text-black shadow" />
-                  <label className="mb-1 block text-sm font-bold text-black">
-                    Last Name
-                  </label>
-                  <input className="w-full appearance-none rounded border py-2 px-1 text-black shadow" />
-                  <label className="mb-1 block text-sm font-bold text-black">
-                    Address
-                  </label>
-                  <input className="w-full appearance-none rounded border py-2 px-1 text-black shadow" />
-                  <label className="mb-1 block text-sm font-bold text-black">
-                    City
-                  </label>
-                  <input className="w-full appearance-none rounded border py-2 px-1 text-black shadow" />
-                </form>
-              </div>
-              <div className="border-blueGray-200 flex items-center justify-end rounded-b border-t border-solid p-6">
-                <button
-                  className="background-transparent mr-1 mb-1 px-6 py-2 text-sm font-bold uppercase text-red-500 outline-none focus:outline-none"
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                >
-                  Close
-                </button>
-                <button
-                  className="mr-1 mb-1 rounded bg-yellow-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none hover:shadow-lg focus:outline-none active:bg-yellow-700"
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                >
-                  Submit
                 </button>
               </div>
             </div>
