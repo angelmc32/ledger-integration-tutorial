@@ -26,21 +26,28 @@ function App() {
   const [url, setUrl] = useState();
 
   const connectLedger = async () => {
-    const transport = await TransportWebHID.create();
-    const eth = new Eth(transport);
-    const { address } = await eth.getAddress("44'/60'/0'/0/0", false);
-    setAddressState(address);
-    setEthState(eth);
-    let gasPriceCalc = (await provider.getGasPrice())._hex;
-    console.log("Provider gas price", gasPriceCalc);
-    gasPriceCalc = parseInt(parseInt(gasPriceCalc, 16) * 1.15);
-    console.log("Parse Int gas price", gasPriceCalc);
-    setTransferTxState((prevState) => ({
-      ...prevState,
-      gasLimit: 10000,
-      gasPrice: gasPriceCalc,
-    }));
-    setShowModal(false);
+    try {
+      const transport = await TransportWebHID.create();
+      const eth = new Eth(transport);
+      const { address } = await eth.getAddress("44'/60'/0'/0/0", false);
+      setAddressState(address);
+      setEthState(eth);
+      let gasPriceCalc = (await provider.getGasPrice())._hex;
+      console.log("Provider gas price", gasPriceCalc);
+      gasPriceCalc = parseInt(parseInt(gasPriceCalc, 16) * 1.15);
+      console.log("Parse Int gas price", gasPriceCalc);
+      setTransferTxState((prevState) => ({
+        ...prevState,
+        gasLimit: 10000,
+        gasPrice: gasPriceCalc,
+      }));
+      toast.success("Ledger conectado");
+      setShowModal(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Ocurrió un error, intenta de nuevo");
+      setShowModal(false);
+    }
   };
 
   const transactionTransfer = async () => {
@@ -95,7 +102,7 @@ function App() {
     <div className="App">
       <Toaster position="bottom-center" />
       <div className="m-5 flex flex-col items-center justify-center">
-        <p>Click on the bellow button to connect your Ledger Wallet</p>
+        <p>Haz click en el botón para conectar tu Ledger</p>
         <button
           className="mt-6 mb-2 rounded bg-blue-700 py-2 px-4 font-bold text-white hover:bg-blue-600 disabled:opacity-50"
           onClick={() => setShowModal(!showModal)}
@@ -112,7 +119,7 @@ function App() {
                 htmlFor="wallet"
                 className="mb-2 block font-medium text-gray-700"
               >
-                Wallet Public Key
+                Llave pública de tu cartera Ledger ("dirección")
               </label>
               <input
                 type="text"
@@ -127,7 +134,7 @@ function App() {
                 htmlFor="recipient"
                 className="mb-2 block font-medium text-gray-700"
               >
-                Recipient
+                Enviar a ("dirección" de cartera que recibe)
               </label>
               <input
                 type="text"
@@ -143,7 +150,7 @@ function App() {
                   htmlFor="gasPrice"
                   className="mb-2 block font-medium text-gray-700"
                 >
-                  Gas Price in wei
+                  Precio de gas (en wei)
                 </label>
                 <input
                   type="text"
@@ -158,7 +165,7 @@ function App() {
                   htmlFor="gasLimit"
                   className="mb-2 block font-medium text-gray-700"
                 >
-                  Gas Limit in wei
+                  Límite de gas (en wei)
                 </label>
                 <input
                   type="text"
@@ -180,7 +187,7 @@ function App() {
                   htmlFor="chainId"
                   className="mb-2 block font-medium text-gray-700"
                 >
-                  Chain ID
+                  ID de cadena de bloques
                 </label>
                 <input
                   type="text"
@@ -195,7 +202,7 @@ function App() {
                   htmlFor="value"
                   className="mb-2 block font-medium text-gray-700"
                 >
-                  Value
+                  Valor a transferir (en ETH)
                 </label>
                 <input
                   type="text"
@@ -223,7 +230,8 @@ function App() {
           </form>
         </div>
         <div className="flex w-1/2 flex-col p-6">
-          <p className="url">Sepolia etherscan: </p>
+          <h4 className="mb-2 text-xl font-semibold">Red de prueba Sepolia</h4>
+          <p className="text-md mb-2">Explorador de cadena de bloques:</p>
           <div className="flex justify-center p-4">
             {!url ? (
               <p id="url">"No hay información de transacción"</p>
@@ -246,7 +254,7 @@ function App() {
             <div className="border-gray-400-600 relative flex h-1/2 w-2/5 flex-col items-center rounded-lg border-4 bg-white py-6 px-4 shadow-lg outline-none focus:outline-none">
               <div className="flex w-full justify-center">
                 <h5 className="text-2xl font-semibold" id="WalletModalLabel">
-                  Choose your Wallet
+                  Escoge tu cartera
                 </h5>
                 <button
                   className="absolute top-4 right-4 border-0 bg-transparent text-black"
