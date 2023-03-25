@@ -11,28 +11,7 @@ const ConnectLedgerModal = ({
   setTransferTxState,
 }) => {
   const connectLedger = async () => {
-    try {
-      const transport = await TransportWebHID.create();
-      const eth = new Eth(transport);
-      const { address } = await eth.getAddress("44'/60'/0'/0/0", false);
-      setAddressState(address);
-      setEthState(eth);
-      let gasPriceCalc = (await provider.getGasPrice())._hex;
-      console.log("Provider gas price", gasPriceCalc);
-      gasPriceCalc = parseInt(parseInt(gasPriceCalc, 16) * 1.15);
-      console.log("Parse Int gas price", gasPriceCalc);
-      setTransferTxState((prevState) => ({
-        ...prevState,
-        gasLimit: 32000,
-        gasPrice: gasPriceCalc,
-      }));
-      toast.success("Ledger conectado");
-      setShowModal(false);
-    } catch (error) {
-      console.log(error);
-      toast.error("Ocurrió un error, intenta de nuevo");
-      setShowModal(false);
-    }
+    console.log("Conectando Ledger :)");
   };
 
   return (
