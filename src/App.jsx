@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 import { Toaster } from "react-hot-toast";
-import "./App.css";
 import ConnectLedgerModal from "./components/ConnectLedgerModal";
 import LedgerTxButton from "./components/LedgerTxButton";
+import Navbar from "./components/Navbar";
 
 function App() {
   const ALCHEMY_RPC_URL = import.meta.env.VITE_ALCHEMY_API_URL;
@@ -27,10 +27,12 @@ function App() {
   return (
     <div className="App px-10">
       <Toaster position="bottom-center" />
-      <div className="m-5 flex flex-col items-center justify-center">
+      <Navbar />
+      <div className="m-5 mt-[112px] flex flex-col items-center justify-center">
+        <h1 className="mb-2 text-2xl font-bold">Conecta tu Ledger a React</h1>
         <p>Haz click en el botón para conectar tu Ledger</p>
         <button
-          className="mt-6 mb-2 rounded bg-blue-700 py-2 px-4 font-bold text-white hover:bg-blue-600 disabled:opacity-50"
+          className="mt-4 mb-2 rounded bg-blue-700 py-2 px-4 font-bold text-white hover:bg-blue-600 disabled:opacity-50"
           onClick={() => setShowModal(!showModal)}
           disabled={addressState !== null ? true : false}
         >
@@ -38,7 +40,7 @@ function App() {
         </button>
       </div>
       <div className="flex w-full px-8">
-        <div id="app" className="w-1/2">
+        <div className="w-1/2">
           <form className="rounded border-2 p-8">
             <div className="mb-2 flex w-full flex-col items-start">
               <label
@@ -139,7 +141,7 @@ function App() {
                 />
               </div>
             </div>
-            <div className="mt-6 mb-2">
+            <div className="mt-6 mb-2 flex justify-center">
               <LedgerTxButton
                 addressState={addressState}
                 ethState={ethState}
@@ -154,14 +156,18 @@ function App() {
           </form>
         </div>
         <div className="flex w-1/2 flex-col px-8 pt-16">
-          <h4 className="mb-2 text-xl font-semibold">Red de prueba Sepolia</h4>
-          <p className="text-md mb-2">Explorador de cadena de bloques:</p>
+          <h4 className="mb-2 text-center text-xl font-semibold">
+            Red de prueba Sepolia
+          </h4>
+          <p className="text-md mb-2 text-center">
+            Explorador de cadena de bloques:
+          </p>
           <div className="flex justify-center p-4">
             {!url ? (
-              <p id="url">"No hay información de transacción"</p>
+              <p className="text-center">"No hay información de transacción"</p>
             ) : (
               <a
-                className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                className=" text-center font-medium text-blue-600 hover:underline dark:text-blue-500"
                 href={url}
                 rel="noopener noreferrer"
                 target="_blank"
